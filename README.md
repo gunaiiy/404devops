@@ -39,20 +39,6 @@ A simple Flask "infrastructure dashboard" that:
 | `/metrics` | Prometheus-format metrics |
 | `/chaos` | Intentionally crashes the pod (POST) |
 
-## Run locally
-
-```bash
-pip install -r requirements.txt
-python app.py
-# open http://localhost:5000
-```
-
-### With Docker
-
-```bash
-docker build -t 404devops:v1 .
-docker run -p 5000:5000 404devops:v1
-```
 
 ## Roadmap
 
