@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="az">
+<head>
+<meta charset="UTF-8">
+<title>404 DevOps — Infrastructure Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0e14;
+    --panel: #11161f;
+    --border: #1f2733;
+    --text: #d5dbe3;
+    --muted: #6b7685;
+    --amber: #e3b341;
+    --green: #3fb950;
+    --red: #f85149;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'JetBrains Mono', monospace;
+    max-width: 720px;
+    margin: 28px auto;
+    padding: 0 20px;
+  }
+
+  .terminal-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-bottom: none;
+    border-radius: 8px 8px 0 0;
+    padding: 10px 14px;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; }
+  .dot.red { background: #f85149; }
+  .dot.yellow { background: #e3b341; }
+  .dot.green { background: #3fb950; }
+  .terminal-path {
+    margin-left: 10px;
+    color: var(--muted);
+    font-size: 13px;
+  }
+
+  .hero {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 20px 24px 16px;
+  }
+  .eyebrow {
+    color: var(--amber);
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .pulse {
+    width: 8px; height: 8px; border-radius: 50%;
+    background: var(--green);
+    box-shadow: 0 0 0 0 rgba(63,185,80,0.6);
+    animation: pulse 2s infinite;
+  }
+  @keyframes pulse {
+    0%   { box-shadow: 0 0 0 0 rgba(63,185,80,0.5); }
+    70%  { box-shadow: 0 0 0 6px rgba(63,185,80,0); }
+    100% { box-shadow: 0 0 0 0 rgba(63,185,80,0); }
+  }
+  h1 {
+    font-size: 24px;
+    margin: 8px 0 4px;
+    color: #eef2f7;
+  }
+  .subtitle { color: var(--muted); font-size: 14px; margin: 0; }
+
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-top: none;
+    padding: 2px 24px;
+  }
+  .row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .row:last-child { border-bottom: none; }
+  .label { color: var(--muted); font-size: 13px; }
+  .value { color: var(--green); font-weight: 700; font-size: 14px; }
+
+  .footer-note {
+    border: 1px solid var(--border);
+    border-top: none;
+    background: var(--panel);
+    padding: 12px 24px;
+    color: var(--muted);
+    font-size: 13px;
+    border-radius: 0 0 8px 8px;
+  }
+
+  .actions { margin-top: 16px; text-align: center; }
+  button {
+    background: var(--red);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-family: inherit;
+    font-weight: 700;
+    font-size: 13px;
+    letter-spacing: 0.5px;
+  }
+  button:hover { background: #ff6b63; }
+  #chaos-result {
+    margin-top: 12px;
+    color: var(--amber);
+    font-size: 13px;
+    min-height: 18px;
+  }
+
+  .credit {
+    margin-top: 20px;
+    text-align: center;
+    color: var(--muted);
+    font-size: 13px;
+    padding-top: 14px;
+    border-top: 1px solid var(--border);
+  }
+  .credit a {
+    color: var(--amber);
+    text-decoration: none;
+    font-weight: 600;
+  }
+  .credit a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+  <div class="terminal-bar">
+    <span class="dot red"></span>
+    <span class="dot yellow"></span>
+    <span class="dot green"></span>
+    <span class="terminal-path">gunay@404devops:~$ kubectl get pod -w</span>
+  </div>
+
+  <div class="hero">
+    <div class="eyebrow"><span class="pulse"></span> SYSTEM STATUS: RUNNING</div>
+    <h1>🚀 404 DevOps</h1>
+    <p class="subtitle">Real Kubernetes cluster · Real deployment · Real monitoring</p>
+  </div>
+
+  <div class="card">
+    <div class="row"><span class="label">POD_NAME</span><span class="value">{{ pod_name }}</span></div>
+    <div class="row"><span class="label">NODE_NAME</span><span class="value">{{ node_name }}</span></div>
+    <div class="row"><span class="label">VERSION</span><span class="value">{{ app_version }}</span></div>
+    <div class="row"><span class="label">GIT_COMMIT</span><span class="value">{{ git_commit }}</span></div>
+    <div class="row"><span class="label">ENVIRONMENT</span><span class="value">{{ environment }}</span></div>
+    <div class="row"><span class="label">DEPLOYED_AT</span><span class="value">{{ deployed_at }}</span></div>
+    <div class="row"><span class="label">UPTIME</span><span class="value">{{ uptime }}</span></div>
+    <div class="row"><span class="label">REQUEST_COUNT</span><span class="value">{{ request_count }}</span></div>
+  </div>
+
+  <div class="footer-note">
+    💡 Bu səhifəni yenilə (F5) — Load Balancer səni fərqli bir Pod-a yönləndirə bilər, yuxarıdakı <strong>POD_NAME</strong> dəyişəcək.
+  </div>
+
+  <div class="actions">
+    <button onclick="triggerChaos()">💥 CRASH THIS POD — Chaos Test</button>
+    <div id="chaos-result"></div>
+  </div>
+
+  <div class="credit">
+    Made with ☕ by <a href="https://www.linkedin.com/in/gunay-abdullazada/" target="_blank" rel="noopener">LinkedIn profile →</a>
+  </div>
+
+  <script>
+    async function triggerChaos() {
+      document.getElementById('chaos-result').innerText = "⏳ Pod çökdürülür...";
+      try {
+        await fetch('/chaos', { method: 'POST' });
+      } catch (e) {
+        document.getElementById('chaos-result').innerText =
+          "✅ Pod çökdü! Bir neçə saniyə sonra yenilə — Kubernetes onu avtomatik yenidən başladacaq.";
+      }
+    }
+  </script>
+</body>
+</html>
