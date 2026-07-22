@@ -1,57 +1,32 @@
-# 🚀 404 DevOps
+# 404 DevOps
 
-A live DevOps portfolio project — not just an app, but a real environment demonstrating containerization, orchestration, CI/CD, monitoring, and infrastructure-as-code.
+A DevOps portfolio project — not just an app, but a full environment covering
+containerization, orchestration, CI/CD, monitoring, and infrastructure-as-code.
 
-🔗 **Live demo:** _coming soon (after VM + Kubernetes deployment)_
-
----
+Live demo: coming soon, after the VM + Kubernetes deployment is up.
 
 ## What it does
 
-A simple Flask "infrastructure dashboard" that:
+A simple Flask "infrastructure dashboard" that shows which pod and node
+handled the request, live. It also displays the deployed Git commit and
+version as proof the CI/CD pipeline actually ran, exposes `/metrics` in
+Prometheus format, and has a "Chaos Test" button that crashes the pod on
+purpose — a quick way to watch Kubernetes self-healing in real time.
 
-- Shows which Pod and Node handled the request, live
-- Displays the deployed Git commit and version (proof of CI/CD)
-- Exposes `/metrics` in Prometheus format
-- Has a **"Chaos Test"** button that intentionally crashes the pod — demonstrating Kubernetes self-healing in real time
+Built with Flask, Docker, Kubernetes (kubeadm), Terraform, GitHub Actions,
+Prometheus + Grafana, the ELK stack, and Let's Encrypt/cert-manager for
+HTTPS.
 
-## Tech Stack
+## Endpoints
 
-| Layer | Technology |
-|---|---|
-| App | Python (Flask) |
-| Containerization | Docker |
-| Orchestration | Kubernetes (kubeadm) |
-| IaC | Terraform |
-| CI/CD | GitHub Actions |
-| Monitoring | Prometheus + Grafana |
-| Logging | ELK Stack |
-| DNS/SSL | Let's Encrypt (cert-manager) |
+`/` is the main dashboard. `/health` is what Kubernetes probes check.
+`/version` shows the deployed version and Git commit. `/pod-info` returns
+pod/node info as JSON. `/metrics` exposes Prometheus-format metrics, and
+`/chaos` (POST) intentionally crashes the pod.
 
-## API Endpoints
+## What's next
 
-| Endpoint | Description |
-|---|---|
-| `/` | Main dashboard (HTML) |
-| `/health` | Health check (for Kubernetes probes) |
-| `/version` | Deployed version + Git commit |
-| `/pod-info` | Pod/Node info (JSON) |
-| `/metrics` | Prometheus-format metrics |
-| `/chaos` | Intentionally crashes the pod (POST) |
-
-
-## Roadmap
-
-- [x] Flask dashboard app
-- [x] Dockerfile
-- [ ] Terraform infrastructure
-- [ ] Kubernetes cluster (kubeadm)
-- [ ] Deployment/Service/Ingress
-- [ ] GitHub Actions CI/CD
-- [ ] Domain + HTTPS
-- [ ] Prometheus + Grafana
-- [ ] ELK logging
-
-## Author
-
-**Gunay Abdullazada** · [LinkedIn](https://www.linkedin.com/in/gunay-abdullazada/)
+Flask app and Dockerfile are done. Still to come: Terraform for the
+infrastructure, a real kubeadm cluster, Deployment/Service/Ingress,
+GitHub Actions CI/CD, a domain with HTTPS, Prometheus + Grafana, and
+ELK for logging.
